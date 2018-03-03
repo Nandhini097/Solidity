@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+  <head> 
+      <script src="web3.min.js"></script>
+
+    <title>bank</title>	
+    
+  </head>
+  <body>
+<body bg color="pink">
+<h1><center>Bank Wallet</h1>
+ <label><center><input type="text" id="dname"></label><br><br>
+<label><button id="depositId" onclick="deposit()">deposit</label></button><br><br>
+<label><input type="text" id="ttname"></label><br><br>
+<label><input type="text" id="tname"></label><br><br>
+<label><button id="transferid" onclick="transfer()">transfer </label></button><br><br>
+<label><input type="text" id="wname"></label><br><br>
+<label><button id="withdrawid" onclick="withdraw()"> withdraw</label></button><br><br>
+<label><button id="balid"> balanceOf</label></button><br><br>
+<label><input type="text" id=""bname"></label><br><br>
+<label><input type="text" id="afrom"></label>
+<label><input type="text" id="ato"></label>
+<label><input type="text" id="avalue"></label>
+<label><button id="transferFromid" onclick="transferFrom()">transferFrom</label></button><br><br>
+<label><input type="text" id="aato"></label>
+<label><input type="text" id="aavalue"></label>
+<label><button id="approveid" onclick="approve()">approve</label></button><br><br>
+<label><input type="text" id="aowner"></label><br><br>
+<label><input type="text" id="aspender"></label><br><br>
+<label><button id=allowanceid" onclick="allowance()">allowance</label></button><br><br>
+<pre id="hashresult"></pre>
+
+    Previous Hash : <pre id="prehashresult"></pre>
+</center>
+  </body>
+<script>
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+        var bank = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "_totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"name": "_spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "Approval",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "deposit",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_spender",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_from",
+				"type": "address"
+			},
+			{
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"name": "success",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]);
+var abbu=bank.at('0xa8fa8ec2026d9ad5a8b360e4885eb13b62c9ecca');
+var a=document.getElementById('dname');
+var b=document.getElementById('wname');
+var c=document.getElementById('ttname');
+var d=document.getElementById('tname');
+var e=document.getElementById('bname');
+var f=document.getElementById('afrom');
+var g=document.getElementById('ato');
+var h=document.getElementById('avalue');
+var i=document.getElementById('aato');
+var j=document.getElementById('aavalue');
+var k=document.getElementById('aowner');
+var l=document.getElementById('aspender');
+
+
+ var output = document.getElementById('hashresult');
+ var preoutput = document.getElementById('prehashresult');
+ if(!web3.isConnected()) {
+  
+        console.log("Ok");
+        
+      }
+ else {
+        console.log("no");
+      }
+
+ web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        })
+
+function deposit()
+{    
+  return abbu.deposit(a.value,function(err,res){
+                if (!err) {
+	
+                  output.innerText = res;
+                }
+                else{
+                  output.innerText = "Error";
+                }
+
+});
+}
+function withdraw()
+{
+ return abbu.withdraw(b.value,function(err,res){
+                if (!err) {
+                   
+                  output.innerText = res;
+                }
+                else{   
+                  output.innerText = "Error";
+                }
+         });
+}
+function transfer()
+{
+ return abbu.transfer(c.value,d.value,function(err,res){
+                if (!err) {
+                      output.innerText = res;
+                }
+                else{   
+                  output.innerText = "Error";
+                }
+         });
+                    
+}
+function balanceOf()
+{
+return abbu.balanceOf(e.value,function(err,res){
+  if (!err) {
+                    output.innerText = res;
+                }
+                else{   
+                  output.innerText = "Error";
+                }
+         });
+}
+
+function transferFrom()
+{
+return abbu.transferFrom(f.value,g.value,h.value,function(err,res){
+  if (!err) {
+                    output.innerText = res;
+                }
+                else{   
+                  output.innerText = "Error";
+                }
+         });
+}
+
+function approve()
+{
+return abbu.approve(i.value,j.value,function(err,res){
+  if (!err) {
+                    output.innerText = res;
+                }
+                else{   
+                  output.innerText = "Error";
+                }
+         });
+}
+function allowance()
+{
+return abbu.allowance(k.value,l.value,function(err,res){
+  if (!err) {
+                    output.innerText = res;
+                }
+                else{   
+                  output.innerText = "Error";
+                }
+         });
+}
+
+
