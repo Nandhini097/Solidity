@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head><center>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <script src="web3.min.js"></script>
+  </head>
+  <body bgcolor="pink">
+<legend>Interview</legend>
+
+<input type="text" id="ad"/><br><br>
+    <input  type="text" id="candrollno"/><br><br>
+    <input type="text" id="candname"/><br><br>
+   <button id="getid" onclick="get()"><b>get</b></button><br><br>
+
+    <input type="text" id="ad"/><br><br>
+   
+<button id="resultid" onclick="result()"><b>result</b></button><br><br>
+
+    <pre id="hashresult"></pre>
+    Previous Hash : <pre id="prehashresult"></pre>
+</center>
+ </body> </body>
+<script>
+   
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var sam = web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "ad",
+				"type": "uint256"
+			}
+		],
+		"name": "result",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "ad",
+				"type": "uint256"
+			},
+			{
+				"name": "candname",
+				"type": "string"
+			},
+			{
+				"name": "candrollno",
+				"type": "uint256"
+			}
+		],
+		"name": "get",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]);
+var abbu=sam.at('0xddeed0e7798f699fb212d03b205f31a98a446588');
+var a=document.getElementById('ad');
+var b=document.getElementById('candrollno');
+var c=document.getElementById('candname');
+var d=document.getElementById('ad');
+var output = document.getElementById('hashresult');
+ var preoutput = document.getElementById('prehashresult');
+ if(!web3.isConnected()) {
+   console.log("Ok");
+          }
+ else {
+        console.log("no");
+      }
+ web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        })
+function get()
+{    
+  return abbu.get(a.value,b.value,c.value,function(err,res){
+                if (!err) {
+	
+                  output.innerText = res;
+                }
+                else{
+                  output.innerText = "Error";
+                }
+});
+}
+function result()
+{    
+  return abbu.result(d.value,function(err,res){
+                if (!err) {
+	
+                  output.innerText = res;
+                }
+                else{
+                  output.innerText = "Error";
+                }
+});
+}
+</script>
+</html>
