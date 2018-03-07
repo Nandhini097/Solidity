@@ -38,4 +38,7 @@ contract lib{
     {
         return (students[id].name,students[id].id,students[id].bookname,students[id].count,books[bid].stock);
     }
+    function returnbook(uint256 bid)constant returns(uint256)
+    {
+    return(books[bid].stock=books[bid].stock+1);
 }
