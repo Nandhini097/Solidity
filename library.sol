@@ -51,9 +51,9 @@ contract sam
        
         
     }
-    function studentdetails(uint256 stuid)public constant returns(string,uint256)
+    function studentdetails(uint256 stuid)public constant returns(string,string,uint256)
     {          
-       return (libb[stuid].bookname,libb[stuid].count);
+       return (stud[stuid].name,libb[stuid].bookname,libb[stuid].count);
     
     }
     
