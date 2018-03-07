@@ -18,7 +18,7 @@ contract lib{
         students[id].id=id;
         students[id].name=name;
         students[id].bookname=bookname;
-        students[id].count+=1;
+       
     }
     function bookdet(uint256 bid,string bname, uint256 stock)
     {
@@ -30,7 +30,7 @@ contract lib{
     function getbooks(uint256 id,uint256 bid)
     {
         students[id].bookname=books[bid].bname;
-        students[id].count+=1;
+        students[id].count++;
         books[bid].stock-=1;
     }
     function receive(uint256 id,uint256 bid)constant returns(string,string,uint256,uint256)
