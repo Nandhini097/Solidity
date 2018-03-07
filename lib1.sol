@@ -40,5 +40,8 @@ contract lib{
     }
     function returnbook(uint256 bid)constant returns(uint256)
     {
-    return(books[bid].stock=books[bid].stock+1);
+    require(students[id].count!=0);
+        books[bid].stock=books[bid].stock+1;
+        students[id].count--;
+}
 }
